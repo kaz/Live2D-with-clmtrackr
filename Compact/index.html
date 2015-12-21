@@ -1,7 +1,8 @@
-<button onclick="startApplication()">START</button>
-<div style="position: relative; width: 960px; height: 480px;">
+<button id="start">START</button><br>
+<div id="container" style="display: none; position: relative; width: 480px; height: 360px;">
 	<video id="video" width="480" height="360" style="position: absolute; top: 0; left: 0;"></video>
-	<canvas id="overlay" width="480" height="480" style="position: absolute; top: 0; left: 0;"></canvas>
-	<canvas id="live2d" width="480" height="480" style="position: absolute; top: 0; right: 0;"></canvas>
+	<canvas id="overlay" width="480" height="360" style="position: absolute; top: 0; left: 0;"></canvas>
 </div>
+<canvas id="live2d" width="480" height="480" style="display: none;"></canvas>
+<pre id="stat" style="display: none;"></pre>
 <script src="js/release.js"></script>

@@ -8,9 +8,10 @@
 				padding: 0;
 			}
 			#container {
+				display: none;
 				position: relative;
-				width: 960px;
-				height: 480px;
+				width: 480px;
+				height: 360px;
 			}
 			#video, #overlay {
 				position: absolute;
@@ -18,9 +19,7 @@
 				left: 0;
 			}
 			#live2d {
-				position: absolute;
-				top: 0;
-				right: 0;
+				display: none;
 			}
 			#stat {
 				font-size: 2em;
@@ -28,12 +27,12 @@
 		</style>
 	</head>
 	<body>
-		<button onclick="startApplication()">START</button>
+		<button id="start">START</button><br>
 		<div id="container">
 			<video id="video" width="480" height="360"></video>
-			<canvas id="overlay" width="480" height="480"></canvas>
-			<canvas id="live2d" width="480" height="480"></canvas>
+			<canvas id="overlay" width="480" height="360"></canvas>
 		</div>
+		<canvas id="live2d" width="480" height="480"></canvas>
 		<pre id="stat"></pre>
 
 		<!-- Live2D SDK -->
@@ -51,7 +50,7 @@
 			 * by traP TokyoTech (kaz)
 			 */
 
-			var startApplication = (function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
+			document.querySelector("#start").addEventListener("click", (function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
 				var live2dParams;
 
 				//clmtrackrを初期化
@@ -209,6 +208,9 @@
 
 				//開始関数
 				return function(){
+					//描画領域を表示
+					document.querySelector("#container").style.display = document.querySelector("#live2d").style.display = "inline-block";
+
 					//ベンダープレフィックスを外す
 					navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 					window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -222,7 +224,7 @@
 						alert("Failed to access camera");
 					});
 				};
-			})(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager);
+			})(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager));
 		</script>
 	</body>
 </html>

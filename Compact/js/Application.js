@@ -3,7 +3,7 @@
  * by traP TokyoTech (kaz)
  */
 
-var startApplication = (function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
+document.querySelector("#start").addEventListener("click", (function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
 	var live2dParams;
 
 	//clmtrackrを初期化
@@ -21,7 +21,7 @@ var startApplication = (function(window, document, navigator, alert, clm, pModel
 	};
 	//clmtrackr描画開始
 	var drawTracker = function(tracker){
-		//var stat = document.querySelector("#stat");
+		var stat = document.querySelector("#stat");
 		var overlay = document.querySelector("#overlay");
 		var ctx = overlay.getContext("2d");
 
@@ -34,7 +34,7 @@ var startApplication = (function(window, document, navigator, alert, clm, pModel
 
 			//Live2D用パラメータを計算して表示
 			live2dParams = calculateParams(tracker);
-			//stat.textContent = JSON.stringify(live2dParams, null, 4);
+			stat.textContent = JSON.stringify(live2dParams, null, 4);
 		})();
 	};
 	//顔パーツの位置からLive2Dのパラメータを計算
@@ -161,6 +161,9 @@ var startApplication = (function(window, document, navigator, alert, clm, pModel
 
 	//開始関数
 	return function(){
+		//描画領域を表示
+		document.querySelector("#container").style.display = document.querySelector("#live2d").style.display = "inline-block";
+
 		//ベンダープレフィックスを外す
 		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -174,4 +177,4 @@ var startApplication = (function(window, document, navigator, alert, clm, pModel
 			alert("Failed to access camera");
 		});
 	};
-})(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager);
+})(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager));
