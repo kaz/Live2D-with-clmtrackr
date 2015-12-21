@@ -1,9 +1,9 @@
 /**
- * @license [traP Advent Calendar 2015 - Day25]
+ * @license [traP Advent Calendar 2015 - Day22]
  * by traP TokyoTech (kaz)
  */
 
-(function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
+var startApplication = (function(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager){
 	var live2dParams;
 
 	//clmtrackrを初期化
@@ -65,8 +65,8 @@
 			params["PARAM_EYE_BALL_Y"] = (pos[27][1] - pos[24][1]) / eyeHL - 0.5;
 
 			//目の開閉
-			params["PARAM_EYE_L_OPEN"] = eyeHL / lipH;
-			params["PARAM_EYE_R_OPEN"] = eyeHR / lipH;
+			params["PARAM_EYE_L_OPEN"] = 0.7 * eyeHL / lipH;
+			params["PARAM_EYE_R_OPEN"] = 0.7 * eyeHR / lipH;
 
 			//眉の上下
 			params["PARAM_BROW_L_Y"] = 2 * (pos[24][1] - pos[21][1]) / lipH - 4;
@@ -77,7 +77,7 @@
 	};
 	//Live2Dを初期化
 	var initLive2D = function(callback){
-		var _assetsDir = "../assets";
+		var _assetsDir = "assets";
 		var _modelFile = _assetsDir + "/shizuku.moc";
 		var _physicsFile = _assetsDir + "/shizuku.physics.json";
 		var _textureFiles = [
@@ -159,16 +159,19 @@
 			return null;
 	};
 
-	//ベンダープレフィックスを外す
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-	window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
-	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+	//開始関数
+	return function(){
+		//ベンダープレフィックスを外す
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+		window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
-	//カメラにアクセス
-	navigator.getUserMedia({video: true}, function(stream){
-		initLive2D(drawLive2D);
-		drawTracker(initTracker(stream));
-	}, function(){
-		alert("Could not use camera")
-	})
+		//カメラにアクセス
+		navigator.getUserMedia({video: true}, function(stream){
+			initLive2D(drawLive2D);
+			drawTracker(initTracker(stream));
+		}, function(){
+			alert("Failed to access camera");
+		});
+	};
 })(window, document, navigator, alert, clm, pModel, Live2D, Live2DFramework, Live2DModelWebGL, PlatformManager);
